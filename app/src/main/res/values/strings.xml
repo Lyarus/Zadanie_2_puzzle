@@ -2,4 +2,7 @@
     <string name="app_name">Zadanie_2_puzzle</string>
     <string name="start">Start</string>
     <string name="puzzle">Puzzle</string>
+    <string name="nowa_gra">Nowa gra</string>
+    <string name="gratulacje">Gratulacje!</string>
+    <string name="czas">Czas:</string>
 </resources>
