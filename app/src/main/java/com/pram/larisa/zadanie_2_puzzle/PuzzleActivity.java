@@ -10,11 +10,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,11 +27,26 @@ import static java.lang.Math.abs;
 
 public class PuzzleActivity extends AppCompatActivity {
     ArrayList<PuzzlePiece> pieces;
+    private Chronometer mChronometer;
+    public final static String MESSAGE_KEY ="czas";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
+
+        mChronometer = findViewById(R.id.chronometer);
+
+        mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                long elapsedMillis = SystemClock.elapsedRealtime()
+                        - mChronometer.getBase();
+            }
+        });
+
+        mChronometer.setBase(SystemClock.elapsedRealtime());
+        mChronometer.start();
 
         final RelativeLayout layout = findViewById(R.id.layout);
         ImageView imageView = findViewById(R.id.imageView);
@@ -235,7 +253,10 @@ public class PuzzleActivity extends AppCompatActivity {
 
     public void checkGameOver() {
         if (isGameOver()) {
+            mChronometer.stop();
             final Intent koniec = new Intent(this, KoniecActivity.class);
+            String czas = mChronometer.getText().toString();
+            koniec.putExtra(MESSAGE_KEY,czas);
             startActivity(koniec);
         }
     }
