@@ -39,10 +39,7 @@ public class PuzzleActivity extends AppCompatActivity {
 
         mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long elapsedMillis = SystemClock.elapsedRealtime()
-                        - mChronometer.getBase();
-            }
+            public void onChronometerTick(Chronometer chronometer) {}
         });
 
         mChronometer.setBase(SystemClock.elapsedRealtime());
